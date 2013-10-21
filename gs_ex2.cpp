@@ -16,8 +16,11 @@ int main(){
     // cin returns false if an input operation fails, that is, if
     // something other than an int (the type of input_var) is entered.
     if(!(cin >> input_var)){
-      cout<< "You entered a non-numeric. Exiting..." << endl;
-      break;
+      //cout<< "You entered a non-numeric. Exiting..." << endl;
+      cout<< "You entered a non-numeric. Recovering from error..." << endl;
+      cin.clear();
+      cin.ignore(1000, '\n');
+      //break;
       // exit do while loop
     }
     if(input_var != -1){
