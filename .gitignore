@@ -1,6 +1,10 @@
 # windows exe
 *.exe
 
+# emacs ignore
+*~
+
+
 # Compiled Object files
 *.slo
 *.lo
