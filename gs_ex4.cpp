@@ -1,3 +1,5 @@
+// gs_ex4.cpp: Santiago Arias
+// Description: Guess a secret number game
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
