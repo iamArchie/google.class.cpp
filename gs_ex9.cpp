@@ -20,15 +20,14 @@ int main(){
   People << first_name << endl << last_name << endl << age << endl;
 
   // Read
-  ifstream ReadPeople (file_name, ios::in);
-  if(ReadPeople){
-    char c = ReadPeople.get();
+  ifstream People_in (file_name, ios::in);
+  People_in >> first_name >> last_name >> age;
 
-    while( ReadPeople.good()){
-      cout << c;
-      c = ReadPeople.get();
-    }
-    ReadPeople.close();
-  }
+  cout << endl << "Enter First Name: " << first_name;
+  cout << endl << "Enter Last Name: " << last_name;
+  cout << endl << "Enter Age: " << age;
+  cout << endl;
+
+  People_in.close();
   return 0;
 }
