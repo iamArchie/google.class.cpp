@@ -1,5 +1,6 @@
-# windows exe
+# exe
 *.exe
+*.out
 
 # emacs ignore
 *~
