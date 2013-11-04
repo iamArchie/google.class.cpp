@@ -14,6 +14,7 @@ private:
 public:
   void set(int h, int m, int s){hours_ = h; minutes_ = m; seconds_ = s;}
   void increment(void);
+  void decrement(void);
   void display(void);
 };
 
@@ -24,6 +25,22 @@ void Time::increment(void){
   seconds_ %= 60;
   minutes_ %= 60;
   hours_ %= 24;
+  return;
+}
+
+
+void Time::decrement(void){
+  seconds_--;
+  if(seconds_ < 0){
+    seconds_ += 60;
+    minutes_--;
+  }
+  if(minutes_ < 0){
+    minutes_ += 60;
+    hours_--;
+  }
+  if(hours_ < 0)
+    hours_ += 24;
   return;
 }
 
@@ -41,7 +58,11 @@ int main(){
   for(int i = 0; i < 5; i++){
     timer.increment();
     timer.display();
-    cout << endl;
+  }
+  cout << endl;
+  for(int i = 4; i >= 0; i--){
+    timer.decrement();
+    timer.display();
   }
 
 }
