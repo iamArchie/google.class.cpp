@@ -44,7 +44,28 @@
 // for your solution to the problem. Make sure each function does one task.
 
 int main(){
-  
+  int book_code;
+  double single_copy_price;
+  int number_on_hand;
+  do{
+    cout << "Please enter the book code:"; 
+    if(!(cin >> book_code)){
+      continue;
+    }
+    cout << "single copy price:" ;
+    if(!(cin >> single_copy_price)){
+      continue;
+    }
+    cout << "number on hand:" ;
+    if(!(cin >> number_on_hand)){
+      continue;
+    }
+    
+ number on hand: 30
+ prospective enrollment: 150
+ 1 for reqd/0 for optional: 1
+ 1 for new/0 for used: 0
+  }while();
   // accept a series of books.
   // for each book:
   // ask for the code
