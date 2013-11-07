@@ -43,37 +43,86 @@
 // Decompose into a set of functions, and create a main() function that reads like an outline 
 // for your solution to the problem. Make sure each function does one task.
 
+#include <iostream>
+using namespace std;
+
 int main(){
   int book_code;
   double single_copy_price;
   int number_on_hand;
+  int prospective_enrollment;
+  
+  int book_mode;
+  string str_book_mode;
+  bool book_required = false;
+  bool book_optional = false;
+
+  int book_age;
+  string str_book_age;
+  bool book_new = false;
+  bool book_used = false;
+
+  int another_book(0);
   do{
+
     cout << "Please enter the book code:"; 
     if(!(cin >> book_code)){
       continue;
     }
+
     cout << "single copy price:" ;
     if(!(cin >> single_copy_price)){
       continue;
     }
+
     cout << "number on hand:" ;
     if(!(cin >> number_on_hand)){
       continue;
     }
+
+    cout << "prospective enrollment:";
+    if(!(cin >> prospective_enrollment)){
+      continue;
+    }
+
+    cout << "1 for reqd/0 for optional:";
+    if(!(cin >> book_mode)){
+      continue;
+    }
+    if(book_mode == 1) {
+      book_required = true;
+    }else{
+      book_optional = true;
+    }
+
+    cout << "1 for new/0 for used: 0:";
+    if(!(cin >> book_age)){
+      continue;
+    }
+    if(book_age == 1) {
+      book_new = true;
+    }else{
+      book_used = true;
+    }
+
+    cout << "**************************************************" << endl;
+    cout << "Book:" << book_code << endl;
+    cout << "Price:" <<  single_copy_price << endl;
+    cout << "Inventory:" << number_on_hand << endl;
+    cout << "Enrollement:" << prospective_enrollment << endl << endl;
     
- number on hand: 30
- prospective enrollment: 150
- 1 for reqd/0 for optional: 1
- 1 for new/0 for used: 0
-  }while();
-  // accept a series of books.
-  // for each book:
-  // ask for the code
-  // ask the single copy cost
-  // ask the current number of books on hand
-  // the prospective class enrollement
-  // is it required or optional
-  // is it new of used.
+    cout << "This book is" << str_book_mode <<  "and" << str_book_age << "." << endl;
+    cout << "**************************************************" << endl;
+    cout << "Need to order:" << endl; 
+    cout << "Total Cost:" << /*number_books_to_order*single_copy_price <<*/ endl;
+    cout << "**************************************************" << endl << endl;
+    
+    cout << "Enter 1 to do another book, 0 to stop. 0";
+    if( !(cin >> another_book)){
+      continue;
+    }
+  }while(another_book == 1);
+
 
   // show:
   // total cost of books ordered
