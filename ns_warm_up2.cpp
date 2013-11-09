@@ -39,12 +39,78 @@ public:
 
   }
 
-  double get_precent_sold(){ return percent_sold_;}
+  double get_percent_sold(){ return percent_sold_;}
   double get_price(){return price_;}
   int get_code(){return code_;}
   string get_mode(){return str_mode_;}
   string get_age(){return str_age_;}
 };
+
+class Inventory{
+private: 
+  int number_on_hand_;
+  int prospective_enrollment_;
+  int books_to_order_;
+  double total_cost_;
+  double total_orders_;
+  
+public:
+  // default constructor
+  Inventory():books_to_order_(0), number_on_hand_(0), prospective_enrollment_(0), total_cost_(0), total_orders_(0){}
+  void set_inventory(int number_on_hand, int prospective_enrollment){
+    number_on_hand_ = number_on_hand;
+    prospective_enrollment_ = prospective_enrollment;
+    books_to_order_ = 0;
+    total_cost_ = 0;
+  }
+  
+  void set_books_to_order(double precent_sold){
+    books_to_order_ = (prospective_enrollment_* precent_sold) - number_on_hand_;
+  }
+  int get_books_to_order(){return books_to_order_;}
+
+  void set_total_cost(double book_price){
+    total_cost_ = books_to_order_ * book_price;
+  }
+  double get_total_cost(){return total_cost_;}
+
+  void add_order(){
+    total_orders_ += total_cost_;
+  }
+
+  double get_total_orders(){ return total_orders_;}
+  double get_profit(){return total_orders_ * 0.2;}
+  int get_number_on_hand(){return number_on_hand_;}
+  int get_prospective_enrollment(){return prospective_enrollment_;}
+  void reset_book_inventory(){
+    books_to_order_ = 0;
+    number_on_hand_ = 0;
+    prospective_enrollment_ = 0;
+    total_cost_ = 0;
+  }
+
+};
+
+void print_stats(Inventory &inventory, Book &book){
+  cout << "**************************************************" << endl;
+  cout << "Book: " << book.get_code() << endl;
+  cout << "Price: " <<  book.get_price() << endl;
+  cout << "Inventory: " << inventory.get_number_on_hand() << endl;
+  cout << "Enrollement: " << inventory.get_prospective_enrollment() << endl << endl;
+  
+  cout << "This book is " << book.get_mode() <<  " and " << book.get_age() << "." << endl;
+  cout << "**************************************************" << endl;
+  cout << "Need to order: " << inventory.get_books_to_order() << endl; 
+  cout << "Total Cost: " << inventory.get_total_cost() << endl;
+  cout << "**************************************************" << endl << endl;
+}
+
+void print_total_and_profit(Inventory & inventory){
+  cout << "**************************************************" << endl << endl;
+  cout << "Total for all orders: " << inventory.get_total_orders() << endl;
+  cout << "Profit: " << inventory.get_profit() << endl;
+  cout << "**************************************************" << endl << endl;
+}
 
 int main(){
 
@@ -55,17 +121,15 @@ int main(){
   int book_mode;
   int book_age;
   
-  double precent_sold;
-  int number_books_to_order(0);
   int another_book(0);
-  double total_cost(0);
-  double total_orders(0);
-  double profit(0);
 
+  Inventory inventory;
   do{
-    total_orders += total_cost;
-    total_cost = 0;
-    
+    // after reading each book and inventory information reset it.
+    // keep track of total_orders, order info can go away
+    inventory.reset_book_inventory();
+
+    // read input
     cout << "Please enter the book code: "; 
     if(!(cin >> book_code)){
       continue;
@@ -95,34 +159,22 @@ int main(){
     if(!(cin >> book_age)){
       continue;
     }
-
-    Book book(book_code, single_copy_price, book_mode, book_age);
-    number_books_to_order = (prospective_enrollment* book.get_precent_sold()) - number_on_hand;
-    total_cost =  number_books_to_order * book.get_price();
-
-    cout << "**************************************************" << endl;
-    cout << "Book: " << book.get_code() << endl;
-    cout << "Price: " <<  book.get_price() << endl;
-    cout << "Inventory: " << number_on_hand << endl;
-    cout << "Enrollement: " << prospective_enrollment << endl << endl;
     
-    cout << "This book is " << book.get_mode() <<  " and " << book.get_age() << "." << endl;
-    cout << "**************************************************" << endl;
-    cout << "Need to order: " << number_books_to_order << endl; 
-    cout << "Total Cost: " << total_cost << endl;
-    cout << "**************************************************" << endl << endl;
+    // create book object and init current inventory
+    Book book(book_code, single_copy_price, book_mode, book_age);
+    inventory.set_inventory(number_on_hand, prospective_enrollment);
+    inventory.set_books_to_order(book.get_percent_sold());
+    inventory.set_total_cost(book.get_price());
+    
+    print_stats(inventory, book);
     
     cout << endl << "Enter 1 to do another book, 0 to stop.";
     if( !(cin >> another_book)){
       continue;
     }
-    total_orders += total_cost;
-    total_cost = 0;
+    inventory.add_order();
+  
   }while(another_book == 1);
 
-  profit = total_orders * 0.2;
-  cout << "**************************************************" << endl << endl;
-  cout << "Total for all orders: " << total_orders << endl;
-  cout << "Profit: " << profit << endl;
-  cout << "**************************************************" << endl << endl;
+  print_total_and_profit(inventory);
 }
