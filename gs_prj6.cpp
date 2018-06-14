@@ -20,75 +20,45 @@
 // Write a program to determine the date.
 
 #include <iostream>
-
 using namespace std;
 
-string decode_month(const char month);
-int decode_digit(const char day);
-int decode_year(const char year);
 
 int main(){
 
-  string in;
-  cout << "Enter a coded date." << endl;
-  if( !(cin >> in)){
-    cout<< "Error reading the date." << endl;
-  } else {
-    cout << "DD/MM/YYYY: " << decode_digit(in.substr(1,1)[0]) << decode_digit(in.substr(2,1)[0]) << "/" << decode_month(in.substr(0,1)[0]) << "/" <<  decode_year(in.substr(3,1)[0]) << endl;      
-  }
-}
+ string code;
+ cin>>code;
 
-int decode_year(const char year){
+ string month[12]={"Jan","Feb","Mar","Apr","May","Jun",
+                   "Jul","Aug","Sep","Oct","Nov","Dec"};
+ int digit_day[]={0,1,2,3,4,5,6,7,8,9};
 
-  return 64 - year + 1995;
-}
+ string One="ABCDEFGHIJKL";
+ string Two="QRSTUVWXYZ";
 
-int decode_digit(const char day){
-  return day - 81;
-}
 
-string decode_month(char month){
-  string decode;
-  int base = month - 64;
-  switch(base){
-  case 1: 
-    decode = "Jan";
-    break;
-  case 2: 
-    decode = "Feb";
-    break;
-  case 3: 
-    decode = "Mar";
-    break;
-  case 4: 
-    decode = "Apr";
-    break;
-  case 5: 
-    decode = "May";
-    break;
-  case 6: 
-    decode = "Jun";
-    break;
-  case 7: 
-    decode = "Jul";
-    break;
-  case 8: 
-    decode = "Aug";
-    break;
-  case 9: 
-    decode = "Sept";
-    break;
-  case 10: 
-    decode = "Oct";
-    break;
-  case 11: 
-    decode = "Nov";
-    break;
-  case 12: 
-    decode = "Dec";
-    break;
-  default:
-    cout << "Error in month: " << decode << endl;
-  }
-  return decode;
-}
+ for(int i=0; i<12; i++){
+    if(code[0]==One[i]){
+            cout<<month[i];
+            break;}
+ }
+
+ for(int i=0; i<10;i++){
+    if(code[1]==Two[i]){
+        cout<<" / "<<i;
+        break;
+    }
+ }
+
+ for(int i=0; i<10;i++){
+    if(code[2]==Two[i]){
+        cout<<i<<" / ";
+        break;
+    }
+ }
+
+ cout<<1995+(code[3]-'A'+1);
+
+
+
+
+ }
